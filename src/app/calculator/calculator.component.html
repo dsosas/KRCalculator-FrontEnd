@@ -1,0 +1,97 @@
+<div class="container">
+  <div class=".col-md-8">
+    <div  class="row">
+      <div class="col-md-6">
+        <div id="prevOperand"  class="input-group input-group-lg" >
+          <span style="text-align: right">{{upperExpression}}</span>
+        </div>
+      </div>
+    </div>
+    <div  class="row">
+      <div class="col-md-5">
+        <div id="input" (keypress)="filterChar($event)" contenteditable="true" class="input-group input-group-lg" >
+          <span>{{expression}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button (click)="addToExpression('CE')"   type="button" class="btn btn-light btn-lg calcButtons">CE</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('AC')"   type="button" class="btn btn-light btn-lg calcButtons">AC</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('√')"    type="button" class="btn btn-light btn-lg calcButtons">√</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('^')"    type="button" class="btn btn-light btn-lg calcButtons">x<sup>y</sup></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button (click)="addToExpression('7')"   type="button" class="btn btn-light btn-lg calcButtons">7</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('8')"   type="button" class="btn btn-light btn-lg calcButtons">8</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('9')"   type="button" class="btn btn-light btn-lg calcButtons">9</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('*')"   type="button" class="btn btn-light btn-lg calcButtons">*</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button (click)="addToExpression('4')"   type="button" class="btn btn-light btn-lg calcButtons">4</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('5')"   type="button" class="btn btn-light btn-lg calcButtons">5</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('6')"   type="button" class="btn btn-light btn-lg calcButtons">6</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('/')"   type="button" class="btn btn-light btn-lg calcButtons">/</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button (click)="addToExpression('1')"   type="button" class="btn btn-light btn-lg calcButtons">1</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('2')"   type="button" class="btn btn-light btn-lg calcButtons">2</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('3')"   type="button" class="btn btn-light btn-lg calcButtons">3</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('-')"   type="button" class="btn btn-light btn-lg calcButtons">-</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button (click)="addToExpression('0')"   type="button" class="btn btn-light btn-lg calcButtons">0</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('.')"   type="button" class="btn btn-light btn-lg calcButtons">.</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('=')"   type="button" class="btn btn-light btn-lg calcButtons">=</button>
+      </div>
+      <div class="col-md-1">
+        <button (click)="addToExpression('+')"   type="button" class="btn btn-light btn-lg calcButtons">+</button>
+      </div>
+    </div>
+    <h4>Previous Calculations  <button (click)="clearSavedComp()" class="btn btn-link">Clear</button></h4>
+
+
+    <div *ngFor="let expression of savedComputations;let i = index" class="row" align="right" >
+      <span *ngIf="i <= 0" class="savedCompTop">{{expression}}</span>
+      <span *ngIf="i > 0" class="savedComp">{{expression}}</span>
+    </div>
+  </div>
+
+</div>
+

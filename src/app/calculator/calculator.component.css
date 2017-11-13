@@ -1,0 +1,30 @@
+button {
+  width: 100px;
+  height: 60px;
+  cursor: pointer;
+}
+#input{
+  height: 60px;
+  font-size: 40px;
+  width: 86%;
+  border: 1px solid gray;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+  cursor: pointer;
+}
+#prevOperand {
+  height: 40px;
+  font-size: 25px;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+}
+
+.savedComp {
+  padding-left: 15px;
+}
+
+.savedCompTop {
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 25px;
+}
