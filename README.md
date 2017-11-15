@@ -1,22 +1,13 @@
-# Description
+# Environment
 
-This is the front end portion of a Calculator that gets its calculations via a JSON API
-When pulling project first run 'npm install' inside the projects directory to install all
-dependencies.
+Typescript 2.4.2  
+Angular 5.0.1  
 
-# CalculatorFront
+# Instructions
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+If have not followed instructions at https://github.com/dsosas/KRCalculator-BackEnd.git please do so first.  
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
+`git clone https://github.com/dsosas/KRCalculator-FrontEnd.git`  
+`cd KRCalculator-FrontEnd`  
+`npm install`    
+`ng serve`     

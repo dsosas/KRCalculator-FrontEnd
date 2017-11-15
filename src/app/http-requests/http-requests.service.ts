@@ -5,22 +5,19 @@
 */
 
 import {Injectable} from '@angular/core';;
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {URL} from './api-urls';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+
 
 @Injectable()
 export class HttpRequestsService {
 
   private urlObject: any; // contains all data of urls and extensions used for the request
-  private headers = new Headers();
 
 
   constructor(
