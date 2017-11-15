@@ -35,6 +35,27 @@ export class CalculatorComponent implements OnInit {
   private answerSet = false;
   public savedComputations: Array<string>;
 
+  // Static methods //
+  /**
+   * Evaluates whether input is an operator or not.
+   * @param input {string}
+   * @returns {boolean}
+   */
+  public static isOperator(input: string): boolean {
+    const operatorInput: RegExp = new RegExp('[√/+*^-]');
+    return operatorInput.test(input);
+  }
+
+  /**
+   * Checks if input is a valid operand character.
+   * @param {string} input
+   * @returns {boolean}
+   */
+  public static isOperandInput(input: string): boolean {
+    const operandInput: RegExp = new RegExp('[0-9]|[.]|[-]');
+    return operandInput.test(input);
+  }
+  // ends static methods //
   constructor( private httpRequestService: HttpRequestsService) {}
 
   ngOnInit() {
@@ -47,6 +68,8 @@ export class CalculatorComponent implements OnInit {
     }
   }
 
+
+
   /**
    * Checks the type of input to process according to its value performs
    * calculators main functions. This method is used on template and contains
@@ -58,7 +81,7 @@ export class CalculatorComponent implements OnInit {
       this.getCalculationAndSave();
     } else if (this.isOperatorAndCanBeAdded(value)) {
       this.setOperatorAndProcess(value);
-    } else if (this.isOperandInput(value)) {
+    } else if (CalculatorComponent.isOperandInput(value)) {
       this.clearExpressionIfAnswer();
       this.validateAndAddInput(value);
     } else if ( value === 'AC') {
@@ -146,7 +169,7 @@ export class CalculatorComponent implements OnInit {
   }
   /**
    * Precond: all existing operands have to be validated for correctness.
-   * @param {string} input
+   * @param {string} operator
    */
   public setOperatorAndProcess(operator: string): void {
     if (operator === '√') {
@@ -188,16 +211,19 @@ export class CalculatorComponent implements OnInit {
    * Precond: "this.expression" must be a valid operand
    */
   private processAndCalculateSquareRoot(): void {
-    let result: number;
-    result = Math.sqrt(+this.expression);
-    this.upperExpression += ' √' + this.expression;
-    this.resetStates();
-    if (isNaN(result)) {
-      this.setAnswer('Not Real!');
-    } else {
-      this.setAnswer(result.toString());
-    }
-    this.saveAndClearTop();
+    this.httpRequestService.getByParams({operand_1: this.expression}, 'sqrt')
+      .subscribe(response => {
+        if (response) {
+          this.upperExpression += ' √' + this.expression;
+          this.resetStates();
+          if (isNaN(response.result)) {
+            this.setAnswer('Not Real!');
+          } else {
+            this.setAnswer(response.result.toString());
+          }
+          this.saveAndClearTop();
+        }
+      });
   }
 
   /**
@@ -224,26 +250,6 @@ export class CalculatorComponent implements OnInit {
         this.appendToExpression(input);
       }
     }
-
-  /**
-   * Calculates vale of the operation on client's side.
-   * @returns {number}
-   */
-  private calculate(): number {
-        switch (this.getCurrentOperator()) {
-          case '+':
-            return (+this.getOperand1()) +  (+this.getOperand2());
-          case '-':
-            return (+this.getOperand1()) -  (+this.getOperand2());
-          case '*':
-            return (+this.getOperand1()) *  (+this.getOperand2());
-          case '/':
-            return (+this.getOperand1()) /  (+this.getOperand2());
-          case '^':
-            return Math.pow(+this.getOperand1(), +this.getOperand2());
-        }
-    }
-
   /**
    * Calculates the value of the operation. Uses HttpRequestService to
    * communicate with backend API.
@@ -277,7 +283,7 @@ export class CalculatorComponent implements OnInit {
    * @returns {boolean}
    */
   private isOperatorAndCanBeAdded(input: string): boolean {
-    return this.isOperator(input) && this.currentExpressionIsValidOperand() && !this.answerSet;
+    return CalculatorComponent.isOperator(input) && this.currentExpressionIsValidOperand() && !this.answerSet;
   }
 
   /**
@@ -317,25 +323,7 @@ export class CalculatorComponent implements OnInit {
   private charIsValid(input): boolean {
         return this.inputAllowed.test(input);
   }
-  /**
-   * Evaluates whether input is an operator or not.
-   * @param input {string}
-   * @returns {boolean}
-   */
-  private isOperator(input: string): boolean {
-    const operatorInput: RegExp = new RegExp('[√/+*^-]');
-    return operatorInput.test(input);
-  }
 
-  /**
-   * Checks if input is a valid operand character.
-   * @param {string} input
-   * @returns {boolean}
-   */
-  private isOperandInput(input: string): boolean {
-    const operandInput: RegExp = new RegExp('[0-9]|[.]|[-]');
-    return operandInput.test(input);
-  }
 
   /**
    * Sets value of current operator.
